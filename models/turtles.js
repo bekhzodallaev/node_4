@@ -1,5 +1,5 @@
 module.exports = (Sequelize, sequelize) => {
-  return sequelize.define('pizzas', {
+  return sequelize.define('turtles', {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
@@ -10,12 +10,20 @@ module.exports = (Sequelize, sequelize) => {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    description: {
+    color: {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    calories: {
-      type: Sequelize.DOUBLE,
+    weaponId: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+    },
+    firstFavoritePizzaId: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+    },
+    secondFavoritePizzaId: {
+      type: Sequelize.INTEGER,
       allowNull: false,
     },
   });
