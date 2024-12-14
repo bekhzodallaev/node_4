@@ -1,64 +1,75 @@
 const Sequelize = require('sequelize');
 const express = require('express');
-const config = require('./config.json');
-const db = require('./models')(Sequelize, config);
+const config = require('../config.json');
+const db = require('../models')(Sequelize, config);
 const app = express();
 
 app.use(express.json());
 
-//POST
-app.post('/api/turtles', async ({ body }, res) => {
+//CREATE
+const createTurtle = async (req, res) => {
+  console.log('Received POST request with body:', req.body);
   try {
-    const turtles = await db.turtles.create(body);
-    res.json(turtles);
+    const turtle = await db.turtles.create(req.body);
+    res.json(turtle);
   } catch (error) {
+    console.log(error);
     res.status(500).send(error);
   }
-});
-//GET - ALL
-app.get('/api/turtles', async ({ body }, res) => {
-  try {
-    const turtles = await db.turtles.findAndCountAll(body);
-    res.json(turtles);
-  } catch (error) {
-    res.status(500).send(error);
-  }
-});
-//GET - SINGLE ID
-app.get('/api/turtles/:id', async ({ params }, res) => {
-  try {
-    const turtle = await db.turtles.findByPK(params.id);
+};
 
+// GET -ALL
+const getAllTurtles = async (req, res) => {
+  try {
+    const turtles = await db.turtles.findAndCountAll();
+    res.json(turtles);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+// GET - SINGLE 
+const getTurtleById = async (req, res) => {
+  try {
+    const turtle = await db.turtles.findByPk(req.params.id);
     res.json(turtle);
   } catch (error) {
     res.status(500).send(error);
   }
-});
+};
 
-//UPDATE
-app.put('/api/turtles/:id', async ({ body, params }, res) => {
+// PUT
+const updateTurtle = async (req, res) => {
   try {
-    const turtle = await db.turtles.update(body, {
+    const turtle = await db.turtles.update(req.body, {
       where: {
-        id: params.id,
+        id: req.params.id,
       },
     });
     res.json(turtle);
   } catch (error) {
     res.status(500).send(error);
   }
-});
+};
 
-//DELETE
-app.delete('/api/turtles/:id', async ({ params }, res) => {
+// DELETE
+const deleteTurtle = async (req, res) => {
   try {
-    const turtle = db.turtles.destroy({
+    const turtle = await db.turtles.destroy({
       where: {
-        id: params.id,
+        id: req.params.id,
       },
     });
     res.json(turtle);
   } catch (error) {
     res.status(500).send(error);
   }
-});
+};
+
+module.exports = {
+  createTurtle,
+  getAllTurtles,
+  getTurtleById,
+  updateTurtle,
+  deleteTurtle,
+};
