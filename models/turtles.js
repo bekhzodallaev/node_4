@@ -17,14 +17,26 @@ module.exports = (Sequelize, sequelize) => {
     weaponId: {
       type: Sequelize.INTEGER,
       allowNull: false,
+      references: {
+        model: 'weapons',
+        key: 'id',
+      },
     },
     firstFavoritePizzaId: {
       type: Sequelize.INTEGER,
       allowNull: false,
+      references: {
+        model: 'pizzas',
+        key: 'id',
+      },
     },
     secondFavoritePizzaId: {
       type: Sequelize.INTEGER,
       allowNull: false,
+      references: {
+        model: 'pizzas',
+        key: 'id',
+      },
     },
   });
 };
