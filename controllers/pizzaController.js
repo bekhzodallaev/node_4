@@ -25,13 +25,9 @@ app.get('/api/pizzas', async ({ body }, res) => {
   }
 });
 //GET - SINGLE ID
-app.get('/api/pizzas:id', async ({ params }, res) => {
+app.get('/api/pizzas/:id', async ({ params }, res) => {
   try {
-    const pizza = await db.pizzas.findByPk({
-      where: {
-        id: params.id,
-      },
-    });
+    const pizza = await db.pizzas.findByPk(params.id);
 
     res.json(pizza);
   } catch (error) {
@@ -40,7 +36,7 @@ app.get('/api/pizzas:id', async ({ params }, res) => {
 });
 
 //UPDATE
-app.put('/api/pizzas:id', async ({ body, params }, res) => {
+app.put('/api/pizzas/:id', async ({ body, params }, res) => {
   try {
     const pizza = await db.pizzas.update(body, {
       where: {
@@ -54,7 +50,7 @@ app.put('/api/pizzas:id', async ({ body, params }, res) => {
 });
 
 //DELETE
-app.delete('/api/pizzas:id', async ({ params }, res) => {
+app.delete('/api/pizzas/:id', async ({ params }, res) => {
   try {
     const pizza = db.pizzas.destroy({
       where: {

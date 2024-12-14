@@ -25,13 +25,9 @@ app.get('/api/turtles', async ({ body }, res) => {
   }
 });
 //GET - SINGLE ID
-app.get('/api/turtles:id', async ({ params }, res) => {
+app.get('/api/turtles/:id', async ({ params }, res) => {
   try {
-    const turtle = await db.turtles.findByPk({
-      where: {
-        id: params.id,
-      },
-    });
+    const turtle = await db.turtles.findByPK(params.id);
 
     res.json(turtle);
   } catch (error) {
@@ -40,7 +36,7 @@ app.get('/api/turtles:id', async ({ params }, res) => {
 });
 
 //UPDATE
-app.put('/api/turtles:id', async ({ body, params }, res) => {
+app.put('/api/turtles/:id', async ({ body, params }, res) => {
   try {
     const turtle = await db.turtles.update(body, {
       where: {
@@ -54,7 +50,7 @@ app.put('/api/turtles:id', async ({ body, params }, res) => {
 });
 
 //DELETE
-app.delete('/api/turtles:id', async ({ params }, res) => {
+app.delete('/api/turtles/:id', async ({ params }, res) => {
   try {
     const turtle = db.turtles.destroy({
       where: {

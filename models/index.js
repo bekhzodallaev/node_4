@@ -3,14 +3,15 @@ const Weapon = require('./weapon');
 const Pizza = require('./pizza');
 
 require('dotenv').config();
+
 module.exports = (Sequelize, config) => {
-  config = new Sequelize(
-    process.env.DB_NAME,
-    process.env.DB_USER,
-    process.env.DB_PASSWORD,
+  const sequelize = new Sequelize(
+    process.env.DB_NAME || config.database,
+    process.env.DB_USER || config.username,
+    process.env.DB_PASSWORD || config.password,
     {
-      host: process.env.DB_HOST,
-      port: process.env.DB_PORT,
+      host: process.env.DB_HOST || config.host,
+      port: process.env.DB_PORT || config.port,
       dialect: 'postgres',
     }
   );
@@ -25,7 +26,7 @@ module.exports = (Sequelize, config) => {
     weapons,
     pizzas,
 
-    sequelize: sequelize,
-    Sequelize: Sequelize,
+    sequelize,
+    Sequelize,
   };
 };

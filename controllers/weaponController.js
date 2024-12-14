@@ -25,13 +25,9 @@ app.get('/api/weapons', async ({ body }, res) => {
   }
 });
 //GET - SINGLE ID
-app.get('/api/weapons:id', async ({ params }, res) => {
+app.get('/api/weapons/:id', async ({ params }, res) => {
   try {
-    const weapons = await db.weapons.findByPk({
-      where: {
-        id: params.id,
-      },
-    });
+    const weapons = await db.weapons.findByPK(params.id);
 
     res.json(weapons);
   } catch (error) {
@@ -40,7 +36,7 @@ app.get('/api/weapons:id', async ({ params }, res) => {
 });
 
 //UPDATE
-app.put('/api/weapons:id', async ({ body, params }, res) => {
+app.put('/api/weapons/:id', async ({ body, params }, res) => {
   try {
     const weapons = await db.weapons.update(body, {
       where: {
@@ -54,7 +50,7 @@ app.put('/api/weapons:id', async ({ body, params }, res) => {
 });
 
 //DELETE
-app.delete('/api/weapons:id', async ({ params }, res) => {
+app.delete('/api/weapons/:id', async ({ params }, res) => {
   try {
     const weapons = db.weapons.destroy({
       where: {

@@ -1,8 +1,10 @@
 const Sequelize = require('sequelize');
-
+const express = require('express');
 const config = require('./config.json');
-
 const db = require('./models')(Sequelize, config);
+const app = express();
+
+app.use(express.json());
 
 // TODO: database queries
 
